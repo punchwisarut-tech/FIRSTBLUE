@@ -848,3 +848,66 @@ input:focus {
     width: 100%;
   }
 }
+
+/* Admin dropdown */
+.admin-dropdown {
+  position: relative;
+}
+
+.admin-arrow-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.admin-arrow-btn:hover {
+  color: rgba(255,255,255,0.6);
+}
+
+.admin-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #1a2035;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 160px;
+  z-index: 999;
+}
+
+.admin-dropdown-menu.open {
+  display: block;
+}
+
+.admin-menu-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+.admin-menu-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Button press effect */
+.primary-btn, .gold-btn, .ghost-btn, .download-cta {
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s !important;
+}
+
+.primary-btn:active, .gold-btn:active, .ghost-btn:active, .download-cta:active {
+  transform: scale(0.96) !important;
+  opacity: 0.85 !important;
+}
