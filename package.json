@@ -1,0 +1,15 @@
+{
+  "name": "firstblue-snr-download",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.8"
+  },
+  "devDependencies": {
+    "vercel": "^41.7.0"
+  }
+}
