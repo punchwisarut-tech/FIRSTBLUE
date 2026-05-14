@@ -15,6 +15,11 @@ const downloadBtn = document.querySelector("#download-btn");
 
 let activeDownload = null;
 
+// ซ่อน download panel ถ้าไม่มี hash
+if (!location.hash.includes("download?code=")) {
+  downloadPanel.hidden = true;
+}
+
 document.querySelectorAll("[data-open-admin]").forEach((button) => {
   button.addEventListener("click", () => {
     adminDialog.showModal();
@@ -130,11 +135,19 @@ function renderCodeRows(codes) {
   codeList.querySelectorAll("[data-copy]").forEach((button) => {
     button.addEventListener("click", async () => {
       const field = button.closest(".code-row").querySelector(".download-code");
-      const copied = await copyText(button.dataset.copy, field);
+      const code = button.dataset.copy;
+      const copied = await copyText(code, field);
       button.textContent = copied ? "คัดลอกแล้ว" : "คัดลอกไม่สำเร็จ";
-      setTimeout(() => {
-        button.textContent = "คัดลอก";
-      }, 1600);
+      setTimeout(() => { button.textContent = "คัดลอก"; }, 1600);
+
+      // ปิด admin dialog แล้วเลื่อนไปช่อง download
+      adminDialog.close();
+      const downloadInput = document.querySelector("#download-code-input");
+      if (downloadInput) {
+        downloadInput.value = code;
+        downloadInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        downloadInput.focus();
+      }
     });
   });
 
@@ -189,44 +202,16 @@ async function apiPost(url, body) {
 
 async function copyText(text, fallbackField) {
   selectField(fallbackField);
-
-  try {
-    if (document.execCommand("copy")) return true;
-  } catch {
-    // Continue to the next clipboard method.
-  }
-
   if (navigator.clipboard?.writeText && window.isSecureContext) {
     try {
       await navigator.clipboard.writeText(text);
       return true;
-    } catch {
-      // Some embedded browsers report clipboard support but do not grant write access.
-    }
+    } catch {}
   }
-
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.left = "0";
-  textarea.style.top = "0";
-  textarea.style.width = "1px";
-  textarea.style.height = "1px";
-  textarea.style.opacity = "0";
-  document.body.append(textarea);
-  textarea.focus();
-  textarea.select();
-  textarea.setSelectionRange(0, textarea.value.length);
-
   try {
-    return document.execCommand("copy");
-  } catch {
-    return false;
-  } finally {
-    textarea.remove();
-    selectField(fallbackField);
-  }
+    if (document.execCommand("copy")) return true;
+  } catch {}
+  return false;
 }
 
 function selectField(field) {
@@ -243,13 +228,7 @@ function setHint(scope, message) {
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[char];
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char];
   });
 }
 
