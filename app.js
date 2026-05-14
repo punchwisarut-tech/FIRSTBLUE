@@ -83,6 +83,8 @@ downloadBtn.addEventListener("click", () => {
   activeDownload = null;
   downloadBtn.disabled = true;
   downloadStatus.textContent = "ลิงก์ดาวน์โหลดถูกใช้แล้ว หากกดซ้ำไม่ได้ กรุณาติดต่อแอดมิน";
+  history.replaceState(null, "", location.pathname);
+  setTimeout(() => { downloadPanel.hidden = true; }, 2000);
 });
 
 window.addEventListener("hashchange", renderDownload);
@@ -250,3 +252,17 @@ function escapeHtml(value) {
     }[char];
   });
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "toggle-password") {
+    const input = document.querySelector("#admin-password");
+    const btn = e.target;
+    if (input.type === "password") {
+      input.type = "text";
+      btn.textContent = "ซ่อน";
+    } else {
+      input.type = "password";
+      btn.textContent = "แสดง";
+    }
+  }
+});
