@@ -130,11 +130,21 @@ function renderCodeRows(codes) {
   codeList.querySelectorAll("[data-copy]").forEach((button) => {
     button.addEventListener("click", async () => {
       const field = button.closest(".code-row").querySelector(".download-code");
-      const copied = await copyText(button.dataset.copy, field);
+      const code = button.dataset.copy;
+      const copied = await copyText(code, field);
       button.textContent = copied ? "คัดลอกแล้ว" : "คัดลอกไม่สำเร็จ";
-      setTimeout(() => {
-        button.textContent = "คัดลอก";
-      }, 1600);
+      setTimeout(() => { button.textContent = "คัดลอก"; }, 1600);
+
+      // ปิด admin แล้วเลื่อนไปช่อง download
+      adminDialog.close();
+      const downloadInput = document.querySelector("#download-code-input");
+      if (downloadInput) {
+        downloadInput.value = code;
+        setTimeout(() => {
+          downloadInput.scrollIntoView({ behavior: "smooth", block: "center" });
+          downloadInput.focus();
+        }, 300);
+      }
     });
   });
 
