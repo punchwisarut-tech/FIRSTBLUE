@@ -14,30 +14,38 @@ module.exports = async function handler(req, res) {
     }
 
     const supabase = supabaseAdmin();
-    const { data: updated, error: updateError } = await supabase
+
+    // ดึงข้อมูลก่อน ตรวจว่ารหัสมีอยู่และยังไม่ถูกใช้
+    const { data: found, error: findError } = await supabase
       .from("download_codes")
-      .update({ used_at: new Date().toISOString() })
+      .select("code, product_name, file_path, file_name, used_at")
       .eq("code", code)
-      .is("used_at", null)
-      .select("code, product_name, file_path, file_name")
       .single();
 
-    if (updateError || !updated) {
+    if (findError || !found || found.used_at) {
       const error = new Error("รหัสนี้ไม่ถูกต้องหรือถูกใช้ไปแล้ว");
       error.statusCode = 404;
       throw error;
     }
 
+    // ลบรหัสออกจาก DB ทันทีหลัง redeem สำเร็จ
+    const { error: deleteError } = await supabase
+      .from("download_codes")
+      .delete()
+      .eq("code", code);
+
+    if (deleteError) throw deleteError;
+
     const { data: signed, error: signError } = await supabase.storage
       .from(process.env.SUPABASE_BUCKET || "ebooks")
-      .createSignedUrl(updated.file_path, 60);
+      .createSignedUrl(found.file_path, 60);
 
     if (signError) throw signError;
 
     return sendJson(res, 200, {
       url: signed.signedUrl,
-      productName: updated.product_name,
-      fileName: updated.file_name
+      productName: found.product_name,
+      fileName: found.file_name
     });
   } catch (error) {
     return handleError(res, error);
