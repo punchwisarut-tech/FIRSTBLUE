@@ -134,17 +134,6 @@ function renderCodeRows(codes) {
       const copied = await copyText(code, field);
       button.textContent = copied ? "คัดลอกแล้ว" : "คัดลอกไม่สำเร็จ";
       setTimeout(() => { button.textContent = "คัดลอก"; }, 1600);
-
-      // ปิด admin แล้วเลื่อนไปช่อง download
-      adminDialog.close();
-      const downloadInput = document.querySelector("#download-code-input");
-      if (downloadInput) {
-        downloadInput.value = code;
-        setTimeout(() => {
-          downloadInput.scrollIntoView({ behavior: "smooth", block: "center" });
-          downloadInput.focus();
-        }, 300);
-      }
     });
   });
 
@@ -179,6 +168,12 @@ async function renderDownload() {
     activeDownload = await apiPost("/api/redeem-code", { code: codeValue });
     downloadStatus.textContent = `มีไฟล์ ${activeDownload.fileName || DEFAULT_PRODUCT_NAME} พร้อมดาวน์โหลดด้านล่าง กดได้ 1 ครั้ง`;
     downloadBtn.disabled = false;
+
+    // ลบรหัสที่ใช้แล้วออกจาก list ทันที
+    const remaining = readRenderedCodes().filter(
+      (item) => item.code.toUpperCase() !== codeValue.toUpperCase()
+    );
+    renderCodeRows(remaining);
   } catch (error) {
     activeDownload = null;
     downloadStatus.textContent = error.message || "รหัสนี้ไม่ถูกต้องหรือถูกใช้ไปแล้ว";
