@@ -15,7 +15,8 @@ module.exports = async function handler(req, res) {
       code,
       product_name: productName || "FIRSTBLUE SNR PDF",
       file_path: process.env.PDF_FILE_PATH || "firstblue-snr.pdf",
-      file_name: process.env.PDF_FILE_NAME || "FIRSTBLUE SNR 169.-.pdf"
+      file_name: process.env.PDF_FILE_NAME || "FIRSTBLUE SNR 169.-.pdf",
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     };
 
     const { data, error } = await supabase

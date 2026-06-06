@@ -15,26 +15,25 @@ module.exports = async function handler(req, res) {
 
     const supabase = supabaseAdmin();
 
-    // ดึงข้อมูลก่อน ตรวจว่ารหัสมีอยู่และยังไม่ถูกใช้
+    // ดึงข้อมูลก่อน ตรวจว่ารหัสมีอยู่
     const { data: found, error: findError } = await supabase
       .from("download_codes")
-      .select("code, product_name, file_path, file_name, used_at")
+      .select("code, product_name, file_path, file_name, used_at, expires_at")
       .eq("code", code)
       .single();
 
-    if (findError || !found || found.used_at) {
+    if (findError || !found) {
       const error = new Error("รหัสนี้ไม่ถูกต้องหรือถูกใช้ไปแล้ว");
       error.statusCode = 404;
       throw error;
     }
 
-    // ลบรหัสออกจาก DB ทันทีหลัง redeem สำเร็จ
-    const { error: deleteError } = await supabase
-      .from("download_codes")
-      .delete()
-      .eq("code", code);
-
-    if (deleteError) throw deleteError;
+    // เช็คว่ารหัสหมดอายุหรือยัง (7 วัน)
+    if (found.expires_at && new Date(found.expires_at) < new Date()) {
+      const error = new Error("รหัสนี้หมดอายุแล้ว (7 วันหลังสร้าง)");
+      error.statusCode = 403;
+      throw error;
+    }
 
     const { data: signed, error: signError } = await supabase.storage
       .from(process.env.SUPABASE_BUCKET || "ebooks")
