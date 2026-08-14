@@ -6,6 +6,7 @@ const adminLogin = document.querySelector("#admin-login");
 const adminPanel = document.querySelector("#admin-panel");
 const uploadForm = document.querySelector("#upload-form");
 const codeForm = document.querySelector("#code-form");
+const deleteAllCodesForm = document.querySelector("#delete-all-codes-form");
 const downloadCodeForm = document.querySelector("#download-code-form");
 const uploadResult = document.querySelector("#upload-result");
 const codeList = document.querySelector("#code-list");
@@ -66,6 +67,26 @@ codeForm.addEventListener("submit", async (event) => {
     renderCodeRows([record, ...readRenderedCodes()]);
   } catch (error) {
     setHint(codeForm, error.message || "สร้างรหัสไม่สำเร็จ");
+  }
+});
+
+deleteAllCodesForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const password = sessionStorage.getItem(ADMIN_PASSWORD_KEY);
+  const result = document.querySelector("#delete-all-codes-result");
+  if (!password) return;
+
+  if (!window.confirm("ยืนยันลบรหัสดาวน์โหลดทั้งหมด? การดำเนินการนี้ย้อนกลับไม่ได้")) return;
+
+  try {
+    const response = await apiPost("/api/delete-all-codes", {
+      password,
+      confirmation: "DELETE_ALL_CODES"
+    });
+    renderCodeRows([]);
+    result.textContent = `ลบเรียบร้อย ${response.deletedCount || 0} รหัส`;
+  } catch (error) {
+    result.textContent = error.message || "ลบรหัสไม่สำเร็จ";
   }
 });
 
