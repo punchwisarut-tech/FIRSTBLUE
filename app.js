@@ -1,5 +1,6 @@
 const DEFAULT_PRODUCT_NAME = "FIRSTBLUE SNR PDF";
 const ADMIN_PASSWORD_KEY = "firstblue-admin-password";
+const CURRENT_PRODUCT_KEY = "firstblue-current-product";
 
 const adminDialog = document.querySelector("#admin-dialog");
 const adminLogin = document.querySelector("#admin-login");
@@ -45,9 +46,43 @@ adminLogin.addEventListener("submit", async (event) => {
 });
 
 if (uploadForm) {
-  uploadForm.addEventListener("submit", (event) => {
+  uploadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    uploadResult.textContent = "เวอร์ชันออนไลน์ใช้ไฟล์ PDF จาก Supabase Storage: firstblue-snr.pdf";
+    const password = sessionStorage.getItem(ADMIN_PASSWORD_KEY);
+    const file = document.querySelector("#product-file").files[0];
+    const productName = document.querySelector("#product-name").value.trim();
+    if (!password || !file || !productName) return;
+    if (file.type && file.type !== "application/pdf") {
+      uploadResult.textContent = "กรุณาเลือกไฟล์ PDF เท่านั้น";
+      return;
+    }
+
+    try {
+      uploadResult.textContent = `กำลังอัปโหลด ${file.name}...`;
+      const upload = await apiPost("/api/create-upload-url", {
+        password,
+        fileName: file.name
+      });
+      const formData = new FormData();
+      formData.append("cacheControl", "3600");
+      formData.append("", file);
+      const response = await fetch(upload.signedUrl, {
+        method: "PUT",
+        headers: { "x-upsert": "false" },
+        body: formData
+      });
+      if (!response.ok) throw new Error("Supabase ปฏิเสธการอัปโหลดไฟล์");
+
+      const product = {
+        productName,
+        fileName: file.name,
+        filePath: upload.filePath
+      };
+      localStorage.setItem(CURRENT_PRODUCT_KEY, JSON.stringify(product));
+      uploadResult.textContent = `อัปโหลดสำเร็จ: ${file.name} — รหัสใหม่จะใช้ไฟล์นี้`;
+    } catch (error) {
+      uploadResult.textContent = error.message || "อัปโหลดไฟล์ไม่สำเร็จ";
+    }
   });
 }
 
@@ -60,9 +95,12 @@ codeForm.addEventListener("submit", async (event) => {
   }
 
   try {
+    const currentProduct = readCurrentProduct();
     const record = await apiPost("/api/create-code", {
       password,
-      productName: DEFAULT_PRODUCT_NAME
+      productName: currentProduct.productName,
+      fileName: currentProduct.fileName,
+      filePath: currentProduct.filePath
     });
     renderCodeRows([record, ...readRenderedCodes()]);
   } catch (error) {
@@ -117,9 +155,23 @@ async function loadCodes(password) {
 }
 
 function renderAdmin() {
-  uploadResult.textContent = "ไฟล์ออนไลน์พร้อมใช้งาน: firstblue-snr.pdf";
+  const currentProduct = readCurrentProduct();
+  document.querySelector("#product-name").value = currentProduct.productName;
+  uploadResult.textContent = `ไฟล์ปัจจุบัน: ${currentProduct.fileName}`;
   const password = sessionStorage.getItem(ADMIN_PASSWORD_KEY);
   if (password) loadCodes(password).catch(() => {});
+}
+
+function readCurrentProduct() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CURRENT_PRODUCT_KEY));
+    if (saved?.productName && saved?.fileName && saved?.filePath) return saved;
+  } catch {}
+  return {
+    productName: DEFAULT_PRODUCT_NAME,
+    fileName: "FIRSTBLUE SNR 169.-.pdf",
+    filePath: ""
+  };
 }
 
 function renderCodeRows(codes) {

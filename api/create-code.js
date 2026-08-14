@@ -6,16 +6,22 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { password, productName } = req.body || {};
+    const { password, productName, filePath, fileName } = req.body || {};
     requireAdmin(password);
+
+    if (filePath && !String(filePath).startsWith("products/")) {
+      const error = new Error("Invalid product file path");
+      error.statusCode = 400;
+      throw error;
+    }
 
     const supabase = supabaseAdmin();
     const code = createCode();
     const record = {
       code,
       product_name: productName || "FIRSTBLUE SNR PDF",
-      file_path: process.env.PDF_FILE_PATH || "firstblue-snr.pdf",
-      file_name: process.env.PDF_FILE_NAME || "FIRSTBLUE SNR 169.-.pdf",
+      file_path: filePath || process.env.PDF_FILE_PATH || "firstblue-snr.pdf",
+      file_name: fileName || process.env.PDF_FILE_NAME || "FIRSTBLUE SNR 169.-.pdf",
       expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     };
 

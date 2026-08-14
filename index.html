@@ -205,9 +205,11 @@
         <div class="admin-grid">
           <form class="admin-card" id="upload-form">
             <h3>ไฟล์ PDF ออนไลน์</h3>
-            <p class="admin-note">อัปโหลดไฟล์ PDF จริงไว้ใน Supabase Storage ชื่อ <strong>firstblue-snr.pdf</strong> แล้วระบบจะใช้ไฟล์นี้กับทุกรหัสที่สร้าง</p>
-            <button class="primary-btn" type="submit">ตรวจสถานะไฟล์</button>
-            <p class="hint" id="upload-result">ไฟล์ออนไลน์พร้อมใช้งาน: firstblue-snr.pdf</p>
+            <p class="admin-note">เลือกสินค้าและไฟล์ PDF ใหม่ ระบบจะอัปโหลดตรงเข้า Supabase และใช้กับรหัสที่สร้างหลังจากนี้</p>
+            <label>ชื่อสินค้า<input id="product-name" type="text" value="FIRSTBLUE SNR PDF" required /></label>
+            <label>เลือกไฟล์ PDF<input id="product-file" type="file" accept="application/pdf,.pdf" required /></label>
+            <button class="primary-btn" type="submit">อัปโหลดและเปลี่ยนไฟล์ขาย</button>
+            <p class="hint" id="upload-result">ไฟล์ปัจจุบัน: firstblue-snr.pdf</p>
           </form>
 
           <form class="admin-card" id="code-form">
