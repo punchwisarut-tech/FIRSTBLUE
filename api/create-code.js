@@ -28,7 +28,7 @@ module.exports = async function handler(req, res) {
     const { data, error } = await supabase
       .from("download_codes")
       .insert(record)
-      .select("code, product_name, file_name, created_at, used_at")
+      .select("code, product_name, file_name, created_at, used_at, expires_at")
       .single();
 
     if (error) throw error;
@@ -51,6 +51,7 @@ function formatCode(row) {
     productName: row.product_name,
     fileName: row.file_name,
     createdAt: row.created_at,
-    usedAt: row.used_at
+    usedAt: row.used_at,
+    expiresAt: row.expires_at
   };
 }

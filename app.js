@@ -184,14 +184,19 @@ function renderCodeRows(codes) {
 
   codeList.innerHTML = codes
     .map((item) => {
-      const statusClass = item.usedAt ? "status-used" : "status-ready";
-      const statusText = item.usedAt ? "ใช้แล้ว" : "พร้อมใช้งาน";
+      const expired = item.expiresAt && new Date(item.expiresAt) <= new Date();
+      const statusClass = expired ? "status-used" : "status-ready";
+      const statusText = expired ? "หมดอายุแล้ว" : "ใช้งานได้ 7 วัน";
+      const expiryText = item.expiresAt
+        ? `หมดอายุ: ${new Date(item.expiresAt).toLocaleString("th-TH")}`
+        : "ใช้งานได้ 7 วันนับจากเวลาที่สร้าง";
       return `
         <div class="code-row">
           <div>
             <strong>${escapeHtml(item.productName || DEFAULT_PRODUCT_NAME)}</strong>
             <input class="download-code" value="${escapeHtml(item.code)}" readonly />
             <small>ให้ลูกค้ากรอกรหัสนี้ในช่อง Download Ebook</small>
+            <small>${escapeHtml(expiryText)}</small>
           </div>
           <span class="${statusClass}">${statusText}</span>
           <button class="line-btn" type="button" data-copy="${escapeHtml(item.code)}">คัดลอก</button>

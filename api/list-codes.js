@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
     const supabase = supabaseAdmin();
     const { data, error } = await supabase
       .from("download_codes")
-      .select("code, product_name, file_name, created_at, used_at")
+      .select("code, product_name, file_name, created_at, used_at, expires_at")
       .order("created_at", { ascending: false })
       .limit(100);
 
@@ -24,7 +24,8 @@ module.exports = async function handler(req, res) {
         productName: row.product_name,
         fileName: row.file_name,
         createdAt: row.created_at,
-        usedAt: row.used_at
+        usedAt: row.used_at,
+        expiresAt: row.expires_at
       }))
     });
   } catch (error) {
