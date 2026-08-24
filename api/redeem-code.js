@@ -37,7 +37,9 @@ module.exports = async function handler(req, res) {
 
     const { data: signed, error: signError } = await supabase.storage
       .from(process.env.SUPABASE_BUCKET || "ebooks")
-      .createSignedUrl(found.file_path, 60);
+      .createSignedUrl(found.file_path, 300, {
+        download: found.file_name || "FIRSTBLUE.pdf"
+      });
 
     if (signError) throw signError;
 

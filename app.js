@@ -139,7 +139,14 @@ downloadCodeForm.addEventListener("submit", (event) => {
 
 downloadBtn.addEventListener("click", () => {
   if (!activeDownload?.url) return;
-  window.location.href = activeDownload.url;
+  const link = document.createElement("a");
+  link.href = activeDownload.url;
+  link.download = activeDownload.fileName || "FIRSTBLUE.pdf";
+  link.target = "_blank";
+  link.rel = "noopener";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
   activeDownload = null;
   downloadBtn.disabled = true;
   downloadStatus.textContent = "ลิงก์ดาวน์โหลดถูกใช้แล้ว หากกดซ้ำไม่ได้ กรุณาติดต่อแอดมิน";
