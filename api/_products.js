@@ -3,7 +3,8 @@ const PRODUCTS = {
     key: "snr",
     productName: "FIRSTBLUE SNR PDF",
     fileName: "FIRSTBLUE SNR 169.-.pdf",
-    filePath: "firstblue-snr.pdf"
+    filePath: "products/firstblue-snr-examples-v2.pdf",
+    bundledUrl: "/assets/firstblue-snr.pdf"
   },
   bluefang: {
     key: "bluefang",
