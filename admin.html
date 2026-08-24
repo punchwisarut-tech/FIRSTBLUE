@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>FIRSTBLUE | จัดการสินค้าและรหัส</title>
+    <link rel="stylesheet" href="styles.css?v=20260824-admin" />
+  </head>
+  <body class="admin-page">
+    <header class="topbar">
+      <a class="brand" href="index.html#books"><img src="assets/firstblue-logo.jpg" alt="FIRSTBLUE Trader" /><span>FIRSTBLUE Admin</span></a>
+      <nav class="nav"><a href="index.html#books">หน้ารวมหนังสือ</a><a href="bluefang.html">BLUEFANG</a></nav>
+    </header>
+
+    <main class="admin-page-main">
+      <section class="admin-page-login" id="admin-page-login">
+        <p class="eyebrow">SECURE ADMIN</p>
+        <h1>จัดการสินค้าและ<br />รหัสดาวน์โหลด</h1>
+        <p>เข้าสู่ระบบเพื่อควบคุมหนังสือทุกเล่มจากหน้าเดียว</p>
+        <form id="admin-page-login-form" class="admin-login-card">
+          <label>รหัสผ่านแอดมิน<div class="password-row"><input type="password" id="admin-page-password" autocomplete="current-password" required /><button class="line-btn" id="admin-page-toggle" type="button">แสดง</button></div></label>
+          <button class="primary-btn" type="submit">เข้าสู่หน้าจัดการ</button>
+          <p class="hint" id="admin-page-login-hint"></p>
+        </form>
+      </section>
+
+      <section class="admin-dashboard" id="admin-dashboard" hidden>
+        <div class="admin-dashboard-head">
+          <div><p class="eyebrow">CONTROL CENTER</p><h1>จัดการทุกสินค้าในหน้าเดียว</h1></div>
+          <button class="line-btn" id="admin-logout" type="button">ออกจากระบบ</button>
+        </div>
+
+        <section class="product-selector-card">
+          <div><span class="selector-step">STEP 01</span><h2>เลือกสินค้าที่ต้องการจัดการ</h2><p>ไฟล์ที่อัปโหลดและรหัสที่เจนจะผูกกับสินค้าที่เลือกด้านล่าง</p></div>
+          <label class="product-select-label">สินค้า
+            <select id="admin-product-select">
+              <option value="snr">FIRSTBLUE SNR</option>
+              <option value="bluefang">BLUEFANG XAUUSD M3</option>
+            </select>
+          </label>
+        </section>
+
+        <div class="admin-work-grid">
+          <form class="admin-card admin-work-card" id="admin-upload-form">
+            <span class="selector-step">STEP 02</span><h2>อัปโหลดไฟล์สินค้า</h2>
+            <p class="admin-note">ไฟล์จะอัปโหลดตรงเข้า Supabase และบันทึกเป็นไฟล์ปัจจุบันของสินค้าที่เลือก</p>
+            <label>ชื่อสินค้า<input id="admin-product-name" type="text" required /></label>
+            <label>เลือกไฟล์ PDF<input id="admin-product-file" type="file" accept="application/pdf,.pdf" required /></label>
+            <button class="primary-btn" type="submit">อัปโหลดเข้า Supabase</button>
+            <p class="hint" id="admin-upload-result"></p>
+          </form>
+
+          <form class="admin-card admin-work-card" id="admin-generate-form">
+            <span class="selector-step">STEP 03</span><h2>สร้างรหัสดาวน์โหลด</h2>
+            <div class="selected-product-preview" id="selected-product-preview"></div>
+            <p class="admin-note">รหัสใหม่มีอายุ 7 วัน และดาวน์โหลดได้เฉพาะไฟล์ของสินค้าที่เลือก</p>
+            <button class="gold-btn admin-generate-btn" type="submit">เจนรหัสสำหรับสินค้าที่เลือก</button>
+            <p class="hint" id="admin-generate-result"></p>
+          </form>
+        </div>
+
+        <section class="all-codes-panel">
+          <div class="all-codes-head"><div><p class="eyebrow">ALL PRODUCTS</p><h2>รหัสที่สร้างทั้งหมด</h2></div><button class="danger-outline-btn" id="admin-delete-all" type="button">ลบรหัสทั้งหมด</button></div>
+          <div class="code-list" id="admin-code-list"></div>
+          <p class="hint" id="admin-delete-result"></p>
+        </section>
+      </section>
+    </main>
+    <script src="admin.js?v=20260824-admin"></script>
+  </body>
+</html>
