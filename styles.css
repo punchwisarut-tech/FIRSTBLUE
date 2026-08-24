@@ -23,6 +23,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   color: var(--text);
   font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
   background:
@@ -34,6 +35,121 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.book-picker {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 76px);
+  padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 5vw, 5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(rgba(25, 212, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 115, 255, 0.065) 1px, transparent 1px),
+    radial-gradient(circle at 18% 42%, rgba(0, 156, 255, 0.2), transparent 24rem),
+    radial-gradient(circle at 82% 42%, rgba(0, 69, 255, 0.28), transparent 26rem),
+    #02050d;
+  background-size: 44px 44px, 44px 44px, auto, auto, auto;
+}
+
+.book-picker::after {
+  content: "";
+  position: absolute;
+  inset: auto 8% -180px;
+  height: 260px;
+  background: #075dff;
+  filter: blur(120px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.book-picker-head {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  margin: 0 auto clamp(2rem, 4vw, 3.5rem);
+  text-align: center;
+}
+
+.book-picker-head h1 {
+  margin: 0.35rem 0 1rem;
+  font-size: clamp(2.9rem, 7vw, 6.8rem);
+  line-height: 0.93;
+  letter-spacing: -0.055em;
+}
+
+.book-picker-head h1 span {
+  color: transparent;
+  background: linear-gradient(100deg, #fff, #82dfff 52%, #1875ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.book-picker-head > p:last-child {
+  max-width: 660px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.book-choice-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: min(1180px, 100%);
+}
+
+.book-choice {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.72fr) minmax(0, 1fr);
+  align-items: center;
+  min-height: 360px;
+  padding: clamp(1rem, 2vw, 1.6rem);
+  overflow: hidden;
+  border: 1px solid rgba(80, 171, 255, 0.34);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(13, 30, 62, 0.95), rgba(2, 8, 20, 0.96));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.36);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.book-choice:hover {
+  transform: translateY(-8px);
+  border-color: var(--cyan);
+  box-shadow: 0 32px 80px rgba(0, 93, 255, 0.3);
+}
+
+.book-choice::before {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: -60px;
+  bottom: -80px;
+  border-radius: 50%;
+  background: #087dff;
+  filter: blur(80px);
+  opacity: 0.2;
+}
+
+.fang-choice::before { left: auto; right: -50px; background: #003cff; opacity: 0.32; }
+.book-choice-art { position: relative; z-index: 1; display: grid; place-items: center; min-width: 0; }
+.book-choice-art img { width: 100%; max-height: 315px; object-fit: contain; filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.5)); transition: transform 0.3s ease; }
+.book-choice:hover .book-choice-art img { transform: scale(1.045) rotate(-1deg); }
+.book-choice-copy { position: relative; z-index: 1; min-width: 0; }
+.book-number { color: var(--cyan); font-size: 0.76rem; font-weight: 900; letter-spacing: 0.16em; }
+.book-choice h2 { margin: 0.5rem 0; font-size: clamp(1.75rem, 3vw, 3rem); letter-spacing: -0.04em; }
+.book-choice p { min-height: 3.2em; margin: 0 0 1.25rem; color: var(--muted); line-height: 1.6; }
+.book-choice strong { display: inline-flex; align-items: center; gap: 0.6rem; color: white; }
+.book-choice strong span { color: var(--cyan); font-size: 1.5rem; transition: transform 0.2s ease; }
+.book-choice:hover strong span { transform: translateX(5px); }
+.picker-scroll { position: relative; z-index: 2; margin-top: 1.5rem; color: rgba(168, 184, 216, 0.68); font-size: 0.86rem; }
+.picker-scroll span { color: var(--cyan); }
 
 button,
 input {
@@ -786,6 +902,8 @@ input:focus {
 }
 
 @media (max-width: 920px) {
+  .book-choice-grid { grid-template-columns: 1fr; }
+  .book-choice { min-height: 310px; }
   .hero,
   .preview-band {
     grid-template-columns: 1fr;
@@ -821,6 +939,12 @@ input:focus {
 }
 
 @media (max-width: 640px) {
+  .book-picker { min-height: auto; padding-top: 2.5rem; }
+  .book-choice { grid-template-columns: 120px minmax(0, 1fr); min-height: 235px; border-radius: 14px; }
+  .book-choice-art img { max-height: 205px; }
+  .book-choice h2 { font-size: 1.65rem; }
+  .book-choice p { min-height: auto; font-size: 0.86rem; }
+  .book-choice strong { font-size: 0.86rem; }
   .topbar {
     align-items: flex-start;
     flex-direction: column;
