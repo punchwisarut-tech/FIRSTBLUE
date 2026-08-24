@@ -98,9 +98,10 @@ codeForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    const currentProduct = readCurrentProduct();
-    if (document.body.dataset.requiresUpload === "true" && !currentProduct.filePath) {
-      throw new Error("กรุณาอัปโหลดไฟล์ PDF ของสินค้านี้ก่อนสร้างรหัส");
+    const productKey = event.submitter?.dataset.productKey || document.body.dataset.productKey || "snr";
+    const currentProduct = readProduct(productKey);
+    if (productKey === "bluefang" && !currentProduct.filePath) {
+      throw new Error("กรุณาเข้าเมนู BLUEFANG และอัปโหลด PDF ก่อนสร้างรหัส BLUEFANG");
     }
     const record = await apiPost("/api/create-code", {
       password,
@@ -169,14 +170,27 @@ function renderAdmin() {
 }
 
 function readCurrentProduct() {
+  return readProduct(document.body.dataset.productKey || "snr");
+}
+
+function readProduct(productKey) {
   try {
-    const saved = JSON.parse(localStorage.getItem(PRODUCT_STORAGE_KEY));
+    const saved = JSON.parse(localStorage.getItem(`${CURRENT_PRODUCT_KEY}:${productKey}`));
     if (saved?.productName && saved?.fileName && saved?.filePath) return saved;
   } catch {}
+
+  if (productKey === "bluefang") {
+    return {
+      productName: "BLUEFANG XAUUSD M3",
+      fileName: "XAUUSD_M3_FIRSTBLUE.pdf",
+      filePath: ""
+    };
+  }
+
   return {
-    productName: DEFAULT_PRODUCT_NAME,
-    fileName: DEFAULT_FILE_NAME,
-    filePath: DEFAULT_FILE_PATH
+    productName: "FIRSTBLUE SNR PDF",
+    fileName: "FIRSTBLUE SNR 169.-.pdf",
+    filePath: ""
   };
 }
 

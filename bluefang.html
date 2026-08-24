@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="BLUEFANG XAUUSD M3 ระบบล่ากำไร FIRSTBLUE คู่มือ PDF 49 หน้า" />
     <title>BLUEFANG XAUUSD M3 | FIRSTBLUE</title>
-    <link rel="stylesheet" href="styles.css?v=20260824-books" />
-    <link rel="stylesheet" href="bluefang.css?v=20260824-books" />
+    <link rel="stylesheet" href="styles.css?v=20260824-codes" />
+    <link rel="stylesheet" href="bluefang.css?v=20260824-codes" />
   </head>
   <body class="bluefang-page" data-product-key="bluefang" data-product-name="BLUEFANG XAUUSD M3" data-file-name="XAUUSD_M3_FIRSTBLUE.pdf" data-requires-upload="true">
     <header class="topbar">
@@ -107,7 +107,14 @@
             <label>เลือกไฟล์ PDF<input id="product-file" type="file" accept="application/pdf,.pdf" required /></label>
             <button class="primary-btn" type="submit">อัปโหลดเข้า Supabase</button><p class="hint" id="upload-result">ยังไม่ได้อัปโหลดไฟล์ BLUEFANG</p>
           </form>
-          <form class="admin-card" id="code-form"><h3>สร้างรหัส BLUEFANG</h3><p class="admin-note">ต้องอัปโหลดไฟล์ก่อน รหัสใหม่มีอายุ 7 วัน</p><button class="gold-btn" type="submit">สร้างรหัสใหม่</button><p class="hint">รหัสแต่ละชุดใช้งานได้ 7 วัน</p></form>
+          <form class="admin-card" id="code-form">
+            <h3>สร้างรหัสดาวน์โหลด</h3><p class="admin-note">เลือกเจนรหัสแยกตามหนังสือ ลูกค้าจะได้รับไฟล์ของเล่มที่เลือกเท่านั้น</p>
+            <div class="code-product-actions">
+              <button class="product-code-btn snr-code-btn" type="submit" data-product-key="snr"><span>SNR</span><strong>เจนรหัส SNR</strong></button>
+              <button class="product-code-btn fang-code-btn" type="submit" data-product-key="bluefang"><span>BLUEFANG</span><strong>เจนรหัส BLUEFANG</strong></button>
+            </div>
+            <p class="hint">รหัสแต่ละชุดใช้งานได้ 7 วัน</p>
+          </form>
         </div>
         <form class="admin-card" id="delete-all-codes-form" style="margin:16px 0"><h3>ลบรหัสดาวน์โหลดทั้งหมด</h3><p class="admin-note">คำสั่งนี้ลบรหัสของทุกสินค้า แต่ไม่ลบไฟล์ PDF</p><button class="line-btn" type="submit" style="color:#ff6b6b">ลบรหัสทั้งหมด</button><p class="hint" id="delete-all-codes-result"></p></form>
         <div class="code-list" id="code-list"></div>

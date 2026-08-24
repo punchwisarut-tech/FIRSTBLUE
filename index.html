@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FIRSTBLUE Trader | SNR PDF</title>
-    <link rel="stylesheet" href="styles.css?v=20260824-books" />
+    <link rel="stylesheet" href="styles.css?v=20260824-codes" />
   </head>
   <body data-product-key="snr" data-product-name="FIRSTBLUE SNR PDF" data-file-name="FIRSTBLUE SNR 169.-.pdf">
     <header class="topbar">
@@ -249,8 +249,11 @@
 
           <form class="admin-card" id="code-form">
             <h3>สร้างรหัสดาวน์โหลด</h3>
-            <p class="admin-note">กดสร้างรหัส แล้วส่งรหัสนี้ให้ลูกค้าไปกรอกในช่องดาวน์โหลดด้านบน</p>
-            <button class="gold-btn" type="submit">สร้างรหัสใหม่</button>
+            <p class="admin-note">เลือกหนังสือให้ตรงกับสินค้าที่ลูกค้าซื้อ ระบบจะผูกรหัสกับไฟล์ของเล่มนั้นโดยอัตโนมัติ</p>
+            <div class="code-product-actions">
+              <button class="product-code-btn snr-code-btn" type="submit" data-product-key="snr"><span>SNR</span><strong>เจนรหัส SNR</strong></button>
+              <button class="product-code-btn fang-code-btn" type="submit" data-product-key="bluefang"><span>BLUEFANG</span><strong>เจนรหัส BLUEFANG</strong></button>
+            </div>
             <p class="hint">รหัสแต่ละชุดใช้งานได้ 7 วันนับจากเวลาที่สร้าง</p>
           </form>
         </div>

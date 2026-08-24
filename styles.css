@@ -816,6 +816,37 @@ h3 {
   padding: 1rem;
 }
 
+.code-product-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.product-code-btn {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 92px;
+  padding: 0.9rem;
+  color: white;
+  text-align: left;
+  border: 1px solid rgba(85, 175, 255, 0.42);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(12, 42, 88, 0.96), rgba(4, 13, 29, 0.96));
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-code-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan);
+  box-shadow: 0 14px 30px rgba(0, 96, 255, 0.24);
+}
+
+.product-code-btn span { color: var(--cyan); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.14em; }
+.product-code-btn strong { font-size: 1rem; }
+.fang-code-btn { background: linear-gradient(145deg, rgba(0, 71, 181, 0.75), rgba(3, 10, 25, 0.98)); }
+
 label {
   display: grid;
   gap: 0.45rem;
@@ -939,6 +970,7 @@ input:focus {
 }
 
 @media (max-width: 640px) {
+  .code-product-actions { grid-template-columns: 1fr; }
   .book-picker { min-height: auto; padding-top: 2.5rem; }
   .book-choice { grid-template-columns: 120px minmax(0, 1fr); min-height: 235px; border-radius: 14px; }
   .book-choice-art img { max-height: 205px; }
