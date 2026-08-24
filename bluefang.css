@@ -23,6 +23,19 @@
 .fang-card { position:relative; overflow:hidden; border-color:rgba(0,134,255,.38); }
 .fang-card::after { content:""; position:absolute; inset:auto -20% -45% 35%; height:140px; background:#065cff; filter:blur(65px); opacity:.22; }
 .fang-grid-band { background:radial-gradient(circle at 10% 50%,rgba(0,103,255,.2),transparent 28rem); }
+.bluefang-samples { padding:clamp(4rem,8vw,8rem) max(5vw,24px); background:linear-gradient(180deg,#01030a,#041024 50%,#01030a); }
+.sample-heading { max-width:900px; margin:0 auto 2.4rem; text-align:center; }
+.sample-heading p:last-child { max-width:720px; margin-inline:auto; }
+.sample-grid { max-width:1320px; margin:auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; }
+.sample-card { position:relative; display:block; overflow:hidden; border:1px solid rgba(0,174,255,.34); border-radius:20px; background:#061226; box-shadow:0 22px 50px rgba(0,0,0,.35); color:#fff; transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease; }
+.sample-card:hover { transform:translateY(-5px); border-color:rgba(0,208,255,.8); box-shadow:0 28px 70px rgba(0,91,255,.25); }
+.sample-card img { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+.sample-card span { display:flex; justify-content:space-between; gap:1rem; align-items:center; padding:1rem 1.15rem 1.1rem; background:linear-gradient(90deg,rgba(4,16,39,.98),rgba(3,29,64,.98)); }
+.sample-card b { color:#fff; font-size:1.05rem; }
+.sample-card small { color:#8fb5d9; text-align:right; }
+.sample-cta { max-width:1320px; margin:1.5rem auto 0; padding:1.35rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; border:1px solid rgba(244,191,55,.42); border-radius:18px; background:linear-gradient(90deg,rgba(244,191,55,.1),rgba(0,98,255,.13)); }
+.sample-cta p { margin:0; color:#b9cbe0; }
+.sample-cta strong { color:#f4bf37; }
 .fang-statement { display:grid; grid-template-columns:.6fr 1fr; gap:1rem 3rem; align-items:end; margin-bottom:2rem; }
 .fang-statement .eyebrow { grid-column:1/-1; }
 .fang-statement h2 { margin:0; font-size:clamp(2.6rem,6vw,5.6rem); line-height:.9; text-transform:uppercase; }
@@ -30,5 +43,5 @@
 .fang-download { background:radial-gradient(circle at 50% 0,rgba(0,97,255,.28),transparent 26rem),#01040d; }
 .fang-download .code-access-card { border-color:rgba(0,174,255,.45); box-shadow:0 30px 80px rgba(0,75,255,.22); }
 @keyframes fangFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(1deg)} }
-@media(max-width:920px){.bluefang-hero{min-height:auto}.fang-statement{grid-template-columns:1fr}.fang-statement .eyebrow{grid-column:auto}}
+@media(max-width:920px){.bluefang-hero{min-height:auto}.fang-statement{grid-template-columns:1fr}.fang-statement .eyebrow{grid-column:auto}.sample-grid{grid-template-columns:1fr}.sample-card span{display:block}.sample-card small{display:block;text-align:left;margin-top:.35rem}.sample-cta{align-items:stretch;flex-direction:column}.sample-cta .gold-btn{text-align:center}}
 @media(prefers-reduced-motion:reduce){.bluefang-cover-wrap img{animation:none}}
