@@ -378,3 +378,22 @@ if (adminArrowBtn) {
     adminDropdownMenu.classList.remove("open");
   });
 }
+
+const rebateDialog = document.querySelector("#rebate-dialog");
+document.querySelectorAll("[data-rebate-open]").forEach((button) => {
+  button.addEventListener("click", () => rebateDialog?.showModal());
+});
+document.querySelectorAll("[data-rebate-close]").forEach((button) => {
+  button.addEventListener("click", () => rebateDialog?.close());
+});
+
+document.querySelector("#copy-rebate-message")?.addEventListener("click", async () => {
+  const message = document.querySelector("#rebate-message")?.textContent.trim() || "เงินคืน";
+  const result = document.querySelector("#rebate-copy-result");
+  try {
+    await navigator.clipboard.writeText(message);
+    result.textContent = "คัดลอกแล้ว — ส่งข้อความนี้หาแอดมินได้เลย";
+  } catch {
+    result.textContent = "กรุณาคัดลอกข้อความด้านบนแล้วส่งหาแอดมิน";
+  }
+});

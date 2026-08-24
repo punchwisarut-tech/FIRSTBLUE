@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FIRSTBLUE Trader | SNR PDF</title>
-    <link rel="stylesheet" href="styles.css?v=20260824-admin" />
+    <link rel="stylesheet" href="styles.css?v=20260824-rebate" />
   </head>
   <body data-product-key="snr" data-product-name="FIRSTBLUE SNR PDF" data-file-name="FIRSTBLUE SNR 169.-.pdf">
     <header class="topbar">
@@ -53,6 +53,20 @@
           </a>
         </div>
         <div class="picker-scroll">เลื่อนลงเพื่อดูรายละเอียด SNR <span>↓</span></div>
+      </section>
+
+      <section class="rebate-strip" id="rebate">
+        <div class="rebate-visual" aria-hidden="true">
+          <img src="assets/exness-rebate-4-50.png" alt="" />
+        </div>
+        <div class="rebate-copy">
+          <div class="rebate-badges"><span>สำหรับลูกค้า EXNESS</span><span>บัญชี STANDARD</span></div>
+          <p class="eyebrow">FIRSTBLUE REBATE</p>
+          <h2>เทรดทองอยู่แล้ว<br />รับเงินคืนสูงสุด <strong>$4.50</strong><small>/ LOT*</small></h2>
+          <p>เช็กสิทธิ์และวิธีเชื่อมบัญชีกับพาร์ตเนอร์ FIRSTBLUE ได้ฟรี ใช้เวลาไม่นาน</p>
+          <button class="rebate-cta" type="button" data-rebate-open>เช็กสิทธิ์รับเงินคืน <span>→</span></button>
+          <small class="rebate-disclaimer">*อัตราเงินคืนขึ้นอยู่กับประเภทบัญชี สินค้าที่เทรด ปริมาณการซื้อขาย และเงื่อนไขของโปรแกรม FIRSTBLUE เป็นพาร์ตเนอร์อิสระ ไม่ใช่ตัวแทนของ Exness การเทรดมีความเสี่ยง</small>
+        </div>
       </section>
 
       <section class="hero" id="snr-home">
@@ -267,11 +281,23 @@
       </section>
     </dialog>
 
+    <dialog class="rebate-dialog" id="rebate-dialog">
+      <button class="close-btn" type="button" data-rebate-close aria-label="ปิด">x</button>
+      <p class="eyebrow">CHECK REBATE ELIGIBILITY</p>
+      <h2>เช็กสิทธิ์รับเงินคืน</h2>
+      <p>คัดลอกข้อความด้านล่าง แล้วส่งหาแอดมินในช่องทางที่คุณติดต่อ FIRSTBLUE อยู่</p>
+      <div class="rebate-message" id="rebate-message">สวัสดีครับ ต้องการเช็กสิทธิ์รับเงินคืน Exness และวิธีเชื่อมบัญชีกับพาร์ตเนอร์ FIRSTBLUE ครับ</div>
+      <button class="primary-btn" id="copy-rebate-message" type="button">คัดลอกข้อความ “เงินคืน”</button>
+      <p class="hint" id="rebate-copy-result"></p>
+    </dialog>
+
+    <button class="rebate-mobile-fab" type="button" data-rebate-open><span>รับเงินคืนสูงสุด</span><strong>$4.50 / LOT*</strong></button>
+
     <footer class="footer">
       <span>FIRSTBLUE Trader</span>
       <span>สินค้าดิจิทัลสำหรับการเรียนรู้ ไม่ใช่คำแนะนำการลงทุนหรือการรับประกันผลกำไร</span>
     </footer>
 
-    <script src="app.js?v=20260824-fixed-files"></script>
+    <script src="app.js?v=20260824-rebate"></script>
   </body>
 </html>

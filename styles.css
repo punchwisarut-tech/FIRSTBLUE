@@ -151,6 +151,43 @@ a {
 .picker-scroll { position: relative; z-index: 2; margin-top: 1.5rem; color: rgba(168, 184, 216, 0.68); font-size: 0.86rem; }
 .picker-scroll span { color: var(--cyan); }
 
+.rebate-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(260px, .58fr) minmax(0, 1fr);
+  align-items: stretch;
+  width: min(1180px, calc(100% - 2rem));
+  min-height: 440px;
+  margin: clamp(2rem, 5vw, 4rem) auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 199, 58, .52);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 86% 30%, rgba(10, 191, 45, .2), transparent 22rem),
+    linear-gradient(120deg, #020706, #071009 58%, #020b05);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, .44), 0 0 42px rgba(29, 220, 53, .08);
+}
+.rebate-strip::after { content:""; position:absolute; inset:auto -10% -100px 38%; height:180px; background:#10e23d; filter:blur(100px); opacity:.17; }
+.rebate-visual { position:relative; min-height:440px; overflow:hidden; background:#020805; }
+.rebate-visual::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,transparent 55%,#061008 100%),linear-gradient(0deg,rgba(0,0,0,.34),transparent 45%); }
+.rebate-visual img { width:100%; height:100%; object-fit:cover; object-position:center 34%; filter:saturate(1.08) contrast(1.04); }
+.rebate-copy { position:relative; z-index:2; display:flex; flex-direction:column; justify-content:center; padding:clamp(1.5rem,4vw,3.5rem); }
+.rebate-badges { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+.rebate-badges span { padding:.35rem .65rem; color:#dfffe4; border:1px solid rgba(54,231,79,.45); border-radius:999px; background:rgba(14,154,39,.15); font-size:.72rem; font-weight:900; letter-spacing:.08em; }
+.rebate-copy h2 { margin:.3rem 0 1rem; font-size:clamp(2.25rem,5vw,4.8rem); line-height:.92; letter-spacing:-.055em; }
+.rebate-copy h2 strong { color:#ffc83d; font-size:1.15em; text-shadow:0 0 28px rgba(255,188,26,.28); }
+.rebate-copy h2 small { color:#fff; font-size:.38em; letter-spacing:.02em; }
+.rebate-copy > p:not(.eyebrow) { max-width:650px; margin:.25rem 0 1.4rem; color:#c4d4c8; line-height:1.7; }
+.rebate-cta { display:inline-flex; align-items:center; justify-content:center; gap:.7rem; width:max-content; min-height:58px; padding:.9rem 1.4rem; color:white; border:1px solid #6aff72; border-radius:10px; background:linear-gradient(135deg,#08a52c,#14db3a); box-shadow:0 16px 34px rgba(7,205,43,.25); font:inherit; font-weight:900; cursor:pointer; }
+.rebate-cta span { font-size:1.35rem; }
+.rebate-disclaimer { display:block; max-width:700px; margin-top:1.15rem; color:#778f7d; font-size:.7rem; line-height:1.55; }
+.rebate-dialog { width:min(560px,calc(100vw - 2rem)); padding:clamp(1.4rem,4vw,2.2rem); color:var(--text); border:1px solid rgba(75,232,98,.45); border-radius:14px; background:#06110a; box-shadow:0 30px 90px rgba(0,0,0,.65); }
+.rebate-dialog::backdrop { background:rgba(0,0,0,.78); }
+.rebate-dialog h2 { margin:.3rem 0; font-size:2rem; }
+.rebate-dialog > p:not(.eyebrow):not(.hint) { color:var(--muted); line-height:1.65; }
+.rebate-message { margin:1rem 0; padding:1rem; color:#e8ffeb; border:1px solid rgba(75,232,98,.32); border-radius:9px; background:rgba(19,142,38,.12); line-height:1.65; }
+.rebate-mobile-fab { display:none; }
+
 button,
 input {
   font: inherit;
@@ -933,6 +970,7 @@ input:focus {
 }
 
 @media (max-width: 920px) {
+  .rebate-strip { grid-template-columns: .7fr 1fr; }
   .book-choice-grid { grid-template-columns: 1fr; }
   .book-choice { min-height: 310px; }
   .hero,
@@ -970,6 +1008,15 @@ input:focus {
 }
 
 @media (max-width: 640px) {
+  .rebate-strip { grid-template-columns:1fr; min-height:auto; border-radius:16px; }
+  .rebate-visual { min-height:210px; max-height:210px; }
+  .rebate-visual img { object-position:center 26%; }
+  .rebate-copy { padding:1.25rem; }
+  .rebate-copy h2 { font-size:2.45rem; }
+  .rebate-cta { width:100%; }
+  .rebate-mobile-fab { position:fixed; z-index:9; display:grid; right:12px; bottom:12px; gap:.05rem; padding:.55rem .8rem; color:white; text-align:left; border:1px solid #71ff78; border-radius:11px; background:linear-gradient(135deg,#087c25,#11cf37); box-shadow:0 14px 36px rgba(0,0,0,.55); cursor:pointer; }
+  .rebate-mobile-fab span { font-size:.62rem; }
+  .rebate-mobile-fab strong { color:#ffe16c; font-size:.95rem; }
   .code-product-actions { grid-template-columns: 1fr; }
   .book-picker { min-height: auto; padding-top: 2.5rem; }
   .book-choice { grid-template-columns: 120px minmax(0, 1fr); min-height: 235px; border-radius: 14px; }
