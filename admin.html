@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <title>FIRSTBLUE | จัดการสินค้าและรหัส</title>
-    <link rel="stylesheet" href="styles.css?v=20260824-admin" />
+    <link rel="stylesheet" href="styles.css?v=20260824-fixed-files" />
   </head>
   <body class="admin-page">
     <header class="topbar">
@@ -41,18 +41,15 @@
           </label>
         </section>
 
-        <div class="admin-work-grid">
-          <form class="admin-card admin-work-card" id="admin-upload-form">
-            <span class="selector-step">STEP 02</span><h2>อัปโหลดไฟล์สินค้า</h2>
-            <p class="admin-note">ไฟล์จะอัปโหลดตรงเข้า Supabase และบันทึกเป็นไฟล์ปัจจุบันของสินค้าที่เลือก</p>
-            <label>ชื่อสินค้า<input id="admin-product-name" type="text" required /></label>
-            <label>เลือกไฟล์ PDF<input id="admin-product-file" type="file" accept="application/pdf,.pdf" required /></label>
-            <button class="primary-btn" type="submit">อัปโหลดเข้า Supabase</button>
-            <p class="hint" id="admin-upload-result"></p>
-          </form>
+        <div class="admin-work-grid fixed-files-grid">
+          <section class="admin-card admin-work-card fixed-file-card">
+            <span class="selector-step">ไฟล์พร้อมใช้งาน</span><h2>ไฟล์ฝังในระบบแล้ว</h2>
+            <p class="admin-note">ไม่ต้องเลือกหรืออัปโหลด PDF อีก ระบบจะเลือกไฟล์ของหนังสือแต่ละเล่มให้อัตโนมัติ</p>
+            <div class="fixed-file-status" id="fixed-file-status"></div>
+          </section>
 
           <form class="admin-card admin-work-card" id="admin-generate-form">
-            <span class="selector-step">STEP 03</span><h2>สร้างรหัสดาวน์โหลด</h2>
+            <span class="selector-step">STEP 02</span><h2>สร้างรหัสดาวน์โหลด</h2>
             <div class="selected-product-preview" id="selected-product-preview"></div>
             <p class="admin-note">รหัสใหม่มีอายุ 7 วัน และดาวน์โหลดได้เฉพาะไฟล์ของสินค้าที่เลือก</p>
             <button class="gold-btn admin-generate-btn" type="submit">เจนรหัสสำหรับสินค้าที่เลือก</button>
@@ -67,6 +64,6 @@
         </section>
       </section>
     </main>
-    <script src="admin.js?v=20260824-admin"></script>
+    <script src="admin.js?v=20260824-fixed-files"></script>
   </body>
 </html>

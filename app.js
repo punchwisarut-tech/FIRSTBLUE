@@ -99,15 +99,9 @@ codeForm.addEventListener("submit", async (event) => {
 
   try {
     const productKey = event.submitter?.dataset.productKey || document.body.dataset.productKey || "snr";
-    const currentProduct = readProduct(productKey);
-    if (productKey === "bluefang" && !currentProduct.filePath) {
-      throw new Error("กรุณาเข้าเมนู BLUEFANG และอัปโหลด PDF ก่อนสร้างรหัส BLUEFANG");
-    }
     const record = await apiPost("/api/create-code", {
       password,
-      productName: currentProduct.productName,
-      fileName: currentProduct.fileName,
-      filePath: currentProduct.filePath
+      productKey
     });
     renderCodeRows([record, ...readRenderedCodes()]);
   } catch (error) {

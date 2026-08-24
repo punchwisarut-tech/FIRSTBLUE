@@ -1,4 +1,5 @@
 const { handleError, requireAdmin, sendJson, supabaseAdmin } = require("./_supabase");
+const { ensureProductFile, getProduct } = require("./_products");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -6,22 +7,18 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { password, productName, filePath, fileName } = req.body || {};
+    const { password, productKey } = req.body || {};
     requireAdmin(password);
 
-    if (filePath && !String(filePath).startsWith("products/")) {
-      const error = new Error("Invalid product file path");
-      error.statusCode = 400;
-      throw error;
-    }
-
     const supabase = supabaseAdmin();
+    const product = getProduct(productKey);
+    await ensureProductFile(supabase, product, req);
     const code = createCode();
     const record = {
       code,
-      product_name: productName || "FIRSTBLUE SNR PDF",
-      file_path: filePath || process.env.PDF_FILE_PATH || "firstblue-snr.pdf",
-      file_name: fileName || process.env.PDF_FILE_NAME || "FIRSTBLUE SNR 169.-.pdf",
+      product_name: product.productName,
+      file_path: product.filePath,
+      file_name: product.fileName,
       expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     };
 

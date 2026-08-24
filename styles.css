@@ -1075,6 +1075,11 @@ select { min-height: 52px; width: 100%; padding: .75rem; color: white; border: 1
 .selected-product-preview span { color: var(--cyan); font-size: .72rem; font-weight: 900; letter-spacing: .14em; }
 .selected-product-preview strong { font-size: 1.25rem; }
 .selected-product-preview small { color: var(--muted); }
+.fixed-file-status { display: grid; gap: .45rem; margin-top: 1rem; padding: 1rem; border: 1px solid rgba(25, 212, 255, .38); border-radius: 10px; background: rgba(0, 116, 255, .1); }
+.fixed-file-status span { color: var(--cyan); font-size: .78rem; font-weight: 900; }
+.fixed-file-status strong { font-size: 1.15rem; word-break: break-word; }
+.fixed-file-status small { color: var(--muted); line-height: 1.55; }
+.fixed-file-card::after { content: "✓"; display: grid; place-items: center; width: 52px; height: 52px; margin-top: 1rem; color: #03111d; border-radius: 50%; background: var(--cyan); font-size: 1.6rem; font-weight: 900; box-shadow: 0 0 28px rgba(25, 212, 255, .4); }
 .admin-generate-btn { width: 100%; min-height: 58px; }
 .all-codes-panel { margin-top: 1rem; padding: 1.3rem; border: 1px solid var(--line); border-radius: 14px; background: rgba(4, 12, 28, .9); }
 .danger-outline-btn { min-height: 44px; padding: .65rem 1rem; color: var(--danger); border: 1px solid var(--danger); border-radius: 8px; background: transparent; cursor: pointer; }
