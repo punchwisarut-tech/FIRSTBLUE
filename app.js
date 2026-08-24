@@ -1,6 +1,9 @@
-const DEFAULT_PRODUCT_NAME = "FIRSTBLUE SNR PDF";
+const DEFAULT_PRODUCT_NAME = document.body.dataset.productName || "FIRSTBLUE SNR PDF";
+const DEFAULT_FILE_NAME = document.body.dataset.fileName || "FIRSTBLUE SNR 169.-.pdf";
+const DEFAULT_FILE_PATH = document.body.dataset.filePath || "";
 const ADMIN_PASSWORD_KEY = "firstblue-admin-password";
 const CURRENT_PRODUCT_KEY = "firstblue-current-product";
+const PRODUCT_STORAGE_KEY = `${CURRENT_PRODUCT_KEY}:${document.body.dataset.productKey || "snr"}`;
 
 const adminDialog = document.querySelector("#admin-dialog");
 const adminLogin = document.querySelector("#admin-login");
@@ -78,7 +81,7 @@ if (uploadForm) {
         fileName: file.name,
         filePath: upload.filePath
       };
-      localStorage.setItem(CURRENT_PRODUCT_KEY, JSON.stringify(product));
+      localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(product));
       uploadResult.textContent = `อัปโหลดสำเร็จ: ${file.name} — รหัสใหม่จะใช้ไฟล์นี้`;
     } catch (error) {
       uploadResult.textContent = error.message || "อัปโหลดไฟล์ไม่สำเร็จ";
@@ -96,6 +99,9 @@ codeForm.addEventListener("submit", async (event) => {
 
   try {
     const currentProduct = readCurrentProduct();
+    if (document.body.dataset.requiresUpload === "true" && !currentProduct.filePath) {
+      throw new Error("กรุณาอัปโหลดไฟล์ PDF ของสินค้านี้ก่อนสร้างรหัส");
+    }
     const record = await apiPost("/api/create-code", {
       password,
       productName: currentProduct.productName,
@@ -164,13 +170,13 @@ function renderAdmin() {
 
 function readCurrentProduct() {
   try {
-    const saved = JSON.parse(localStorage.getItem(CURRENT_PRODUCT_KEY));
+    const saved = JSON.parse(localStorage.getItem(PRODUCT_STORAGE_KEY));
     if (saved?.productName && saved?.fileName && saved?.filePath) return saved;
   } catch {}
   return {
     productName: DEFAULT_PRODUCT_NAME,
-    fileName: "FIRSTBLUE SNR 169.-.pdf",
-    filePath: ""
+    fileName: DEFAULT_FILE_NAME,
+    filePath: DEFAULT_FILE_PATH
   };
 }
 
