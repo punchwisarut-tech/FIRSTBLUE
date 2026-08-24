@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FIRSTBLUE Trader | SNR PDF</title>
-    <link rel="stylesheet" href="styles.css?v=20260824-rebate" />
+    <link rel="stylesheet" href="styles.css?v=20260824-line-qr" />
   </head>
   <body data-product-key="snr" data-product-name="FIRSTBLUE SNR PDF" data-file-name="FIRSTBLUE SNR 169.-.pdf">
     <header class="topbar">
@@ -283,12 +283,24 @@
 
     <dialog class="rebate-dialog" id="rebate-dialog">
       <button class="close-btn" type="button" data-rebate-close aria-label="ปิด">x</button>
-      <p class="eyebrow">CHECK REBATE ELIGIBILITY</p>
-      <h2>เช็กสิทธิ์รับเงินคืน</h2>
-      <p>คัดลอกข้อความด้านล่าง แล้วส่งหาแอดมินในช่องทางที่คุณติดต่อ FIRSTBLUE อยู่</p>
-      <div class="rebate-message" id="rebate-message">สวัสดีครับ ต้องการเช็กสิทธิ์รับเงินคืน Exness และวิธีเชื่อมบัญชีกับพาร์ตเนอร์ FIRSTBLUE ครับ</div>
-      <button class="primary-btn" id="copy-rebate-message" type="button">คัดลอกข้อความ “เงินคืน”</button>
-      <p class="hint" id="rebate-copy-result"></p>
+      <div class="rebate-dialog-grid">
+        <div class="rebate-qr-panel">
+          <img src="assets/line-firstblue-qr.png" alt="QR Code เพิ่มเพื่อน LINE @firstblue" />
+          <span>สแกนเพื่อเพิ่มเพื่อน</span>
+          <strong>LINE: @firstblue</strong>
+        </div>
+        <div class="rebate-dialog-copy">
+          <p class="eyebrow">CHECK REBATE ELIGIBILITY</p>
+          <h2>เช็กสิทธิ์รับเงินคืน</h2>
+          <p>แอด LINE <strong>@firstblue</strong> แล้วส่งข้อความด้านล่างมาได้เลยค่ะ</p>
+          <div class="rebate-message" id="rebate-message">สวัสดีค่ะ ต้องการเช็กสิทธิ์รับเงินคืน Exness และวิธีเชื่อมบัญชีกับพาร์ตเนอร์ FIRSTBLUE ค่ะ</div>
+          <div class="rebate-dialog-actions">
+            <a class="line-add-btn" href="https://line.me/R/ti/p/%40firstblue" target="_blank" rel="noopener">แอด LINE @firstblue</a>
+            <button class="primary-btn" id="copy-rebate-message" type="button">คัดลอกข้อความเช็กสิทธิ์</button>
+          </div>
+          <p class="hint" id="rebate-copy-result">สแกน QR หรือกดปุ่มแอดไลน์ แล้วส่งข้อความเช็กสิทธิ์ได้เลยค่ะ</p>
+        </div>
+      </div>
     </dialog>
 
     <button class="rebate-mobile-fab" type="button" data-rebate-open><span>รับเงินคืนสูงสุด</span><strong>$4.50 / LOT*</strong></button>
@@ -298,6 +310,6 @@
       <span>สินค้าดิจิทัลสำหรับการเรียนรู้ ไม่ใช่คำแนะนำการลงทุนหรือการรับประกันผลกำไร</span>
     </footer>
 
-    <script src="app.js?v=20260824-rebate"></script>
+    <script src="app.js?v=20260824-line-qr"></script>
   </body>
 </html>

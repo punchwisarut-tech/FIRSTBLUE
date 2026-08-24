@@ -392,7 +392,7 @@ document.querySelector("#copy-rebate-message")?.addEventListener("click", async 
   const result = document.querySelector("#rebate-copy-result");
   try {
     await navigator.clipboard.writeText(message);
-    result.textContent = "คัดลอกแล้ว — ส่งข้อความนี้หาแอดมินได้เลย";
+    result.textContent = "คัดลอกแล้ว — แอด LINE @firstblue แล้วส่งข้อความนี้ได้เลยค่ะ";
   } catch {
     result.textContent = "กรุณาคัดลอกข้อความด้านบนแล้วส่งหาแอดมิน";
   }
