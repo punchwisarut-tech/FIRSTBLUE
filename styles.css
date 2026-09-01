@@ -148,6 +148,9 @@ a {
 .book-choice strong { display: inline-flex; align-items: center; gap: 0.6rem; color: white; }
 .book-choice strong span { color: var(--cyan); font-size: 1.5rem; transition: transform 0.2s ease; }
 .book-choice:hover strong span { transform: translateX(5px); }
+.course-choice { grid-column: 1 / -1; grid-template-columns: minmax(300px, .8fr) 1fr; background: linear-gradient(115deg, rgba(1,9,18,.98), rgba(4,38,78,.96)); border-color: rgba(0,195,255,.5); }
+.course-choice .book-choice-art img { width: 100%; max-height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 18px 60px rgba(0,0,0,.55); }
+.course-choice h2 { color: #e9f7ff; }
 .picker-scroll { position: relative; z-index: 2; margin-top: 1.5rem; color: rgba(168, 184, 216, 0.68); font-size: 0.86rem; }
 .picker-scroll span { color: var(--cyan); }
 
@@ -979,6 +982,7 @@ input:focus {
 @media (max-width: 920px) {
   .rebate-strip { grid-template-columns: .7fr 1fr; }
   .book-choice-grid { grid-template-columns: 1fr; }
+  .course-choice { grid-column: auto; }
   .book-choice { min-height: 310px; }
   .hero,
   .preview-band {
@@ -1032,6 +1036,8 @@ input:focus {
   .code-product-actions { grid-template-columns: 1fr; }
   .book-picker { min-height: auto; padding-top: 2.5rem; }
   .book-choice { grid-template-columns: 120px minmax(0, 1fr); min-height: 235px; border-radius: 14px; }
+  .course-choice { grid-template-columns: 1fr; }
+  .course-choice .book-choice-art img { max-height: 190px; }
   .book-choice-art img { max-height: 205px; }
   .book-choice h2 { font-size: 1.65rem; }
   .book-choice p { min-height: auto; font-size: 0.86rem; }

@@ -1,7 +1,8 @@
 const ADMIN_PASSWORD_KEY = "firstblue-admin-password";
 const PRODUCTS = {
   snr: { productName: "FIRSTBLUE SNR PDF", fileName: "FIRSTBLUE SNR 169.-.pdf" },
-  bluefang: { productName: "BLUEFANG XAUUSD M3", fileName: "XAUUSD_M3_FIRSTBLUE.pdf" }
+  bluefang: { productName: "BLUEFANG XAUUSD M3", fileName: "XAUUSD_M3_FIRSTBLUE.pdf" },
+  course: { productName: "FIRSTBLUE VIDEO COURSE", fileName: "คอร์สเทรดตามเจ้าตลาด" }
 };
 
 const loginSection = document.querySelector("#admin-page-login");
@@ -72,9 +73,11 @@ document.querySelector("#admin-delete-all").addEventListener("click", async () =
 function renderSelectedProduct() {
   const productKey = productSelect.value;
   const product = PRODUCTS[productKey];
-  document.querySelector("#fixed-file-status").innerHTML = `<span>PDF พร้อมใช้งาน</span><strong>${escapeHtml(product.fileName)}</strong><small>ระบบจะผูกไฟล์นี้กับรหัส ${productKey === "snr" ? "SNR" : "BLUEFANG"} ทุกครั้ง</small>`;
-  document.querySelector("#selected-product-preview").innerHTML = `<span>${productKey === "snr" ? "BOOK 01" : "BOOK 02"}</span><strong>${escapeHtml(product.productName)}</strong><small>${escapeHtml(product.fileName)}</small>`;
-  document.querySelector(".admin-generate-btn").textContent = `เจนรหัส ${productKey === "snr" ? "SNR" : "BLUEFANG"}`;
+  const isCourse = productKey === "course";
+  const label = productKey === "snr" ? "SNR" : productKey === "bluefang" ? "BLUEFANG" : "VIDEO COURSE";
+  document.querySelector("#fixed-file-status").innerHTML = `<span>${isCourse ? "ระบบคอร์สพร้อมใช้งาน" : "PDF พร้อมใช้งาน"}</span><strong>${escapeHtml(product.fileName)}</strong><small>${isCourse ? "รหัสนี้ใช้เข้าสู่หน้าเรียนได้ตลอดอายุ 7 วัน" : `ระบบจะผูกไฟล์นี้กับรหัส ${label} ทุกครั้ง`}</small>`;
+  document.querySelector("#selected-product-preview").innerHTML = `<span>${isCourse ? "COURSE 01" : productKey === "snr" ? "BOOK 01" : "BOOK 02"}</span><strong>${escapeHtml(product.productName)}</strong><small>${escapeHtml(product.fileName)}</small>`;
+  document.querySelector(".admin-generate-btn").textContent = `เจนรหัส ${label}`;
   document.querySelector("#admin-generate-result").textContent = "";
 }
 

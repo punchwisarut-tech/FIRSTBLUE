@@ -12,6 +12,14 @@ const PRODUCTS = {
     fileName: "XAUUSD_M3_FIRSTBLUE.pdf",
     filePath: "products/bluefang-xauusd-m3.pdf",
     bundledUrl: "/assets/XAUUSD_M3_FIRSTBLUE.pdf"
+  },
+  course: {
+    key: "course",
+    productName: "FIRSTBLUE VIDEO COURSE",
+    fileName: "คอร์สเทรดตามเจ้าตลาด",
+    filePath: "course:firstblue-trading",
+    bundledUrl: null,
+    accessType: "course"
   }
 };
 
