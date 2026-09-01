@@ -3,3 +3,30 @@
   height: 100%;
   border: 0;
 }
+
+.login-price {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0 8px;
+  padding: 15px 17px;
+  border: 1px solid rgba(255, 210, 77, .55);
+  border-radius: 12px;
+  background: rgba(255, 191, 0, .07);
+}
+
+.login-price span { color: #bed0e4; font-size: .86rem; }
+.login-price strong { color: #ffd75e; font-size: 2.35rem; line-height: 1; }
+.login-price strong small { display: inline; color: #fff; font-size: .9rem; }
+.line-purchase-btn {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid #19d96b;
+  border-radius: 10px;
+  color: #61f398;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 900;
+}
+.line-purchase-btn:hover { background: rgba(25, 217, 107, .1); }

@@ -151,6 +151,16 @@ a {
 .course-choice { grid-column: 1 / -1; grid-template-columns: minmax(300px, .8fr) 1fr; background: linear-gradient(115deg, rgba(1,9,18,.98), rgba(4,38,78,.96)); border-color: rgba(0,195,255,.5); }
 .course-choice .book-choice-art img { width: 100%; max-height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 18px 60px rgba(0,0,0,.55); }
 .course-choice h2 { color: #e9f7ff; }
+.course-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem .8rem; margin: -.45rem 0 1.25rem; }
+.course-price small { width: 100%; color: #9eb9d7; font-weight: 700; }
+.course-price strong { color: #ffd75e; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: .9; text-shadow: 0 0 28px rgba(255,200,50,.22); }
+.course-price strong span { color: #fff; font-size: 1.15rem; }
+.course-price em { color: #8ff3ff; font-size: .88rem; font-style: normal; }
+.course-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem 1.2rem; }
+.course-actions a { text-decoration: none; }
+.course-buy-btn { padding: .95rem 1.25rem; border-radius: 10px; background: linear-gradient(135deg,#08bd54,#19e276); color: #021109; font-weight: 900; box-shadow: 0 10px 30px rgba(8,189,84,.22); }
+.course-login-link { color: #dff6ff; font-weight: 800; }
+.course-login-link span { color: var(--cyan); font-size: 1.25rem; }
 .picker-scroll { position: relative; z-index: 2; margin-top: 1.5rem; color: rgba(168, 184, 216, 0.68); font-size: 0.86rem; }
 .picker-scroll span { color: var(--cyan); }
 
