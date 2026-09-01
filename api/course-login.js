@@ -7,12 +7,17 @@ module.exports = async function handler(req, res) {
     const code = String((req.body || {}).code || "").trim().toUpperCase();
     if (!code) return sendJson(res, 400, { error: "กรุณากรอกรหัสเข้าเรียน" });
     const { data, error } = await supabaseAdmin().from("download_codes")
-      .select("code, product_name, file_path, expires_at")
+      .select("code, product_name, file_path, expires_at, used_at")
       .eq("code", code).eq("file_path", "course:firstblue-trading").maybeSingle();
     if (error) throw error;
     if (!data) return sendJson(res, 401, { error: "รหัสไม่ถูกต้อง หรือไม่ใช่รหัสคอร์ส" });
     const expiresAt = new Date(data.expires_at).getTime();
     if (!expiresAt || Date.now() >= expiresAt) return sendJson(res, 401, { error: "รหัสนี้หมดอายุแล้ว" });
+    if (data.used_at) return sendJson(res, 401, { error: "รหัสนี้เปิดใช้งานกับอุปกรณ์อื่นแล้ว" });
+    const { data: activatedRows, error: activateError } = await supabaseAdmin().from("download_codes")
+      .update({ used_at: new Date().toISOString() }).eq("code", code).is("used_at", null).select("code");
+    if (activateError) throw activateError;
+    if (!activatedRows || activatedRows.length !== 1) return sendJson(res, 409, { error: "รหัสนี้ถูกเปิดใช้งานแล้ว" });
     const token = sign({ course: "firstblue-trading", code: data.code, exp: expiresAt });
     return sendJson(res, 200, { token, expiresAt: data.expires_at });
   } catch (error) { return handleError(res, error); }

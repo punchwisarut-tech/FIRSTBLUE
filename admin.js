@@ -90,8 +90,10 @@ function renderCodes(codes) {
   if (!codes.length) return codeList.innerHTML = `<p class="hint">ยังไม่มีรหัสดาวน์โหลด</p>`;
   codeList.innerHTML = codes.map((item) => {
     const expired = item.expiresAt && new Date(item.expiresAt) <= new Date();
+    const isCourse = item.productName === "FIRSTBLUE VIDEO COURSE";
+    const activated = isCourse && item.usedAt;
     const expiry = item.expiresAt ? new Date(item.expiresAt).toLocaleString("th-TH") : "-";
-    return `<article class="code-row"><div><strong>${escapeHtml(item.productName)}</strong><input class="download-code" value="${escapeHtml(item.code)}" readonly /><small>หมดอายุ: ${escapeHtml(expiry)}</small></div><span class="${expired ? "status-used" : "status-ready"}">${expired ? "หมดอายุ" : "พร้อมใช้งาน"}</span><button class="line-btn copy-code-btn" type="button" data-code="${escapeHtml(item.code)}">คัดลอก</button></article>`;
+    return `<article class="code-row"><div><strong>${escapeHtml(item.productName)}</strong><input class="download-code" value="${escapeHtml(item.code)}" readonly /><small>หมดอายุ: ${escapeHtml(expiry)}</small></div><span class="${expired || activated ? "status-used" : "status-ready"}">${expired ? "หมดอายุ" : activated ? "เปิดใช้งานแล้ว" : "พร้อมใช้งาน"}</span><button class="line-btn copy-code-btn" type="button" data-code="${escapeHtml(item.code)}">คัดลอก</button></article>`;
   }).join("");
   codeList.querySelectorAll(".copy-code-btn").forEach((button) => button.addEventListener("click", async () => {
     await navigator.clipboard.writeText(button.dataset.code);

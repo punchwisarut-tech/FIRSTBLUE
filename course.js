@@ -9,13 +9,13 @@ document.querySelector("#course-login-form").addEventListener("submit", async (e
   message.textContent = "กำลังตรวจสอบรหัส...";
   try {
     const response = await post("/api/course-login", { code });
-    sessionStorage.setItem(STORAGE_KEY, response.token);
+    localStorage.setItem(STORAGE_KEY, response.token);
     await openClassroom(response.token);
   } catch (error) { message.textContent = error.message; }
 });
 
 document.querySelector("#course-logout").addEventListener("click", () => {
-  sessionStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_KEY);
   classroom.hidden = true; loginView.hidden = false;
 });
 
@@ -40,5 +40,5 @@ async function post(url, body) {
 
 function escapeHtml(value) { return String(value || "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"})[c]); }
 
-const token = sessionStorage.getItem(STORAGE_KEY);
-if (token) openClassroom(token).catch(() => sessionStorage.removeItem(STORAGE_KEY));
+const token = localStorage.getItem(STORAGE_KEY);
+if (token) openClassroom(token).catch(() => localStorage.removeItem(STORAGE_KEY));
