@@ -11,8 +11,9 @@ module.exports = async function handler(req, res) {
       .eq("code", code).eq("file_path", "course:firstblue-trading").maybeSingle();
     if (error) throw error;
     if (!data) return sendJson(res, 401, { error: "รหัสไม่ถูกต้อง หรือไม่ใช่รหัสคอร์ส" });
-    const expiresAt = new Date(data.expires_at).getTime();
-    if (!expiresAt || Date.now() >= expiresAt) return sendJson(res, 401, { error: "รหัสนี้หมดอายุแล้ว" });
+    // Course access is lifetime. Keep expires_at in the shared table for
+    // compatibility with ebook codes, but issue a lifetime course session.
+    const expiresAt = new Date("9999-12-31T23:59:59.000Z").getTime();
     if (data.used_at) return sendJson(res, 401, { error: "รหัสนี้เปิดใช้งานกับอุปกรณ์อื่นแล้ว" });
     const { data: activatedRows, error: activateError } = await supabaseAdmin().from("download_codes")
       .update({ used_at: new Date().toISOString() }).eq("code", code).is("used_at", null).select("code");

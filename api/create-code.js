@@ -19,7 +19,9 @@ module.exports = async function handler(req, res) {
       product_name: product.productName,
       file_path: product.filePath,
       file_name: product.fileName,
-      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+      expires_at: product.accessType === "course"
+        ? new Date("9999-12-31T23:59:59.000Z").toISOString()
+        : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
     };
 
     const { data, error } = await supabase

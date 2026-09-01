@@ -22,7 +22,8 @@ document.querySelector("#course-logout").addEventListener("click", () => {
 async function openClassroom(token) {
   const data = await post("/api/course-session", { token });
   loginView.hidden = true; classroom.hidden = false;
-  document.querySelector("#access-expiry").textContent = `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
+  const lifetime = new Date(data.expiresAt).getFullYear() >= 9999;
+  document.querySelector("#access-expiry").textContent = lifetime ? "สิทธิ์นักเรียนตลอดชีพ · ผูกกับอุปกรณ์นี้" : `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
   const shell = document.querySelector("#video-shell");
   if (data.videoUrl) {
     shell.innerHTML = `<video controls controlsList="nodownload" playsinline poster="assets/course/lesson-0901-cover.png"><source src="${escapeHtml(data.videoUrl)}" type="video/mp4" />เบราว์เซอร์นี้ไม่รองรับวิดีโอ</video>`;
