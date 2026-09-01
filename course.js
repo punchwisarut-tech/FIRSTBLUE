@@ -11,7 +11,8 @@ document.querySelector("#course-login-form").addEventListener("submit", async (e
   message.textContent = "กำลังตรวจสอบรหัส...";
   try {
     const response = await post("/api/course-login", { code });
-    renderClassroom(response);
+    sessionStorage.setItem("firstblue-classroom-entry", JSON.stringify(response));
+    window.location.href = "classroom.html";
   } catch (error) {
     message.textContent = error.message;
     submitButton.disabled = false;
