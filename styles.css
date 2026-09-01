@@ -153,6 +153,7 @@ a {
 .course-choice h2 { color: #e9f7ff; }
 .course-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem .8rem; margin: -.45rem 0 1.25rem; }
 .course-price small { width: 100%; color: #9eb9d7; font-weight: 700; }
+.course-price small del { color: #ff7c87; font-size: 1.05rem; text-decoration-thickness: 2px; }
 .course-price strong { color: #ffd75e; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: .9; text-shadow: 0 0 28px rgba(255,200,50,.22); }
 .course-price strong span { color: #fff; font-size: 1.15rem; }
 .course-price em { color: #8ff3ff; font-size: .88rem; font-style: normal; }

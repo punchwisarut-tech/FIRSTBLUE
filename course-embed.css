@@ -17,7 +17,9 @@
 }
 
 .login-price span { color: #bed0e4; font-size: .86rem; }
+.login-price span del { display: block; margin-top: 7px; color: #ff7f88; font-size: 1rem; font-weight: 800; text-decoration-thickness: 2px; }
 .login-price strong { color: #ffd75e; font-size: 2.35rem; line-height: 1; }
+.login-price strong em { display: block; margin-bottom: 7px; color: #7ff3ff; font-size: .7rem; font-style: normal; letter-spacing: .08em; }
 .login-price strong small { display: inline; color: #fff; font-size: .9rem; }
 .line-purchase-btn {
   display: block;
