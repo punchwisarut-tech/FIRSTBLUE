@@ -1,7 +1,7 @@
-const STORAGE_KEY = "firstblue-course-session";
 const loginView = document.querySelector("#login-view");
 const classroom = document.querySelector("#classroom");
 const message = document.querySelector("#login-message");
+try { localStorage.removeItem("firstblue-course-session"); } catch (_) {}
 
 document.querySelector("#course-login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -11,7 +11,6 @@ document.querySelector("#course-login-form").addEventListener("submit", async (e
   message.textContent = "กำลังตรวจสอบรหัส...";
   try {
     const response = await post("/api/course-login", { code });
-    try { localStorage.setItem(STORAGE_KEY, response.token); } catch (_) {}
     renderClassroom(response);
   } catch (error) {
     message.textContent = error.message;
@@ -20,14 +19,11 @@ document.querySelector("#course-login-form").addEventListener("submit", async (e
 });
 
 document.querySelector("#course-logout").addEventListener("click", () => {
-  localStorage.removeItem(STORAGE_KEY);
   classroom.hidden = true; loginView.hidden = false;
+  document.querySelector("#course-code").value = "";
+  const submitButton = document.querySelector("#course-login-form button[type='submit']");
+  submitButton.disabled = false;
 });
-
-async function openClassroom(token) {
-  const data = await post("/api/course-session", { token });
-  renderClassroom(data);
-}
 
 function renderClassroom(data) {
   loginView.hidden = true; classroom.hidden = false;
@@ -63,6 +59,3 @@ async function post(url, body) {
 }
 
 function escapeHtml(value) { return String(value || "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"})[c]); }
-
-const token = localStorage.getItem(STORAGE_KEY);
-if (token) openClassroom(token).catch(() => localStorage.removeItem(STORAGE_KEY));
