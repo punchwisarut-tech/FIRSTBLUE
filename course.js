@@ -23,7 +23,7 @@ async function openClassroom(token) {
   const data = await post("/api/course-session", { token });
   loginView.hidden = true; classroom.hidden = false;
   const lifetime = new Date(data.expiresAt).getFullYear() >= 9999;
-  document.querySelector("#access-expiry").textContent = lifetime ? "สิทธิ์นักเรียนตลอดชีพ · ผูกกับอุปกรณ์นี้" : `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
+  document.querySelector("#access-expiry").textContent = lifetime ? "สิทธิ์นักเรียนตลอดชีพ · ใช้ได้หลายอุปกรณ์" : `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
   const shell = document.querySelector("#video-shell");
   if (data.youtubeVideoId) {
     const videoId = encodeURIComponent(data.youtubeVideoId);

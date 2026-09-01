@@ -75,7 +75,7 @@ function renderSelectedProduct() {
   const product = PRODUCTS[productKey];
   const isCourse = productKey === "course";
   const label = productKey === "snr" ? "SNR" : productKey === "bluefang" ? "BLUEFANG" : "VIDEO COURSE";
-  document.querySelector("#fixed-file-status").innerHTML = `<span>${isCourse ? "ระบบคอร์สพร้อมใช้งาน" : "PDF พร้อมใช้งาน"}</span><strong>${escapeHtml(product.fileName)}</strong><small>${isCourse ? "รหัสนักเรียนใช้เข้าเรียนได้ตลอดชีพ และผูกกับอุปกรณ์แรก" : `ระบบจะผูกไฟล์นี้กับรหัส ${label} ทุกครั้ง`}</small>`;
+  document.querySelector("#fixed-file-status").innerHTML = `<span>${isCourse ? "ระบบคอร์สพร้อมใช้งาน" : "PDF พร้อมใช้งาน"}</span><strong>${escapeHtml(product.fileName)}</strong><small>${isCourse ? "รหัสนักเรียนใช้เข้าเรียนได้ตลอดชีพ และใช้ได้หลายอุปกรณ์" : `ระบบจะผูกไฟล์นี้กับรหัส ${label} ทุกครั้ง`}</small>`;
   document.querySelector("#selected-product-preview").innerHTML = `<span>${isCourse ? "COURSE 01" : productKey === "snr" ? "BOOK 01" : "BOOK 02"}</span><strong>${escapeHtml(product.productName)}</strong><small>${escapeHtml(product.fileName)}</small>`;
   document.querySelector(".admin-generate-btn").textContent = `เจนรหัส ${label}`;
   document.querySelector("#admin-generate-result").textContent = "";
@@ -91,9 +91,8 @@ function renderCodes(codes) {
   codeList.innerHTML = codes.map((item) => {
     const expired = item.expiresAt && new Date(item.expiresAt) <= new Date();
     const isCourse = item.productName === "FIRSTBLUE VIDEO COURSE";
-    const activated = isCourse && item.usedAt;
     const expiry = isCourse ? "ตลอดชีพ" : item.expiresAt ? new Date(item.expiresAt).toLocaleString("th-TH") : "-";
-    return `<article class="code-row"><div><strong>${escapeHtml(item.productName)}</strong><input class="download-code" value="${escapeHtml(item.code)}" readonly /><small>${isCourse ? "สิทธิ์: " : "หมดอายุ: "}${escapeHtml(expiry)}</small></div><span class="${(!isCourse && expired) || activated ? "status-used" : "status-ready"}">${!isCourse && expired ? "หมดอายุ" : activated ? "เปิดใช้งานแล้ว" : "พร้อมใช้งาน"}</span><button class="line-btn copy-code-btn" type="button" data-code="${escapeHtml(item.code)}">คัดลอก</button></article>`;
+    return `<article class="code-row"><div><strong>${escapeHtml(item.productName)}</strong><input class="download-code" value="${escapeHtml(item.code)}" readonly /><small>${isCourse ? "สิทธิ์: " : "หมดอายุ: "}${escapeHtml(expiry)}</small></div><span class="${!isCourse && expired ? "status-used" : "status-ready"}">${!isCourse && expired ? "หมดอายุ" : "พร้อมใช้งาน"}</span><button class="line-btn copy-code-btn" type="button" data-code="${escapeHtml(item.code)}">คัดลอก</button></article>`;
   }).join("");
   codeList.querySelectorAll(".copy-code-btn").forEach((button) => button.addEventListener("click", async () => {
     await navigator.clipboard.writeText(button.dataset.code);
