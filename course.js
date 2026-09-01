@@ -6,12 +6,17 @@ const message = document.querySelector("#login-message");
 document.querySelector("#course-login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const code = document.querySelector("#course-code").value.trim();
+  const submitButton = event.currentTarget.querySelector("button[type='submit']");
+  submitButton.disabled = true;
   message.textContent = "กำลังตรวจสอบรหัส...";
   try {
     const response = await post("/api/course-login", { code });
-    localStorage.setItem(STORAGE_KEY, response.token);
-    await openClassroom(response.token);
-  } catch (error) { message.textContent = error.message; }
+    try { localStorage.setItem(STORAGE_KEY, response.token); } catch (_) {}
+    renderClassroom(response);
+  } catch (error) {
+    message.textContent = error.message;
+    submitButton.disabled = false;
+  }
 });
 
 document.querySelector("#course-logout").addEventListener("click", () => {
@@ -21,7 +26,12 @@ document.querySelector("#course-logout").addEventListener("click", () => {
 
 async function openClassroom(token) {
   const data = await post("/api/course-session", { token });
+  renderClassroom(data);
+}
+
+function renderClassroom(data) {
   loginView.hidden = true; classroom.hidden = false;
+  message.textContent = "";
   const lifetime = new Date(data.expiresAt).getFullYear() >= 9999;
   document.querySelector("#access-expiry").textContent = lifetime ? "สิทธิ์นักเรียนตลอดชีพ · ใช้ได้หลายอุปกรณ์" : `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
   const shell = document.querySelector("#video-shell");
@@ -36,7 +46,17 @@ async function openClassroom(token) {
 }
 
 async function post(url, body) {
-  const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  let response;
+  try {
+    response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: controller.signal });
+  } catch (error) {
+    if (error.name === "AbortError") throw new Error("การเชื่อมต่อใช้เวลานาน กรุณากดเข้าเรียนอีกครั้ง");
+    throw new Error("เชื่อมต่อระบบไม่ได้ กรุณาตรวจอินเทอร์เน็ตแล้วลองใหม่");
+  } finally {
+    clearTimeout(timeout);
+  }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || "ไม่สามารถเชื่อมต่อระบบได้");
   return data;

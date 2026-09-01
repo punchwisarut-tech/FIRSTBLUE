@@ -15,6 +15,17 @@ module.exports = async function handler(req, res) {
     // compatibility with ebook codes, but issue a lifetime course session.
     const expiresAt = new Date("9999-12-31T23:59:59.000Z").getTime();
     const token = sign({ course: "firstblue-trading", code: data.code, exp: expiresAt });
-    return sendJson(res, 200, { token, expiresAt: data.expires_at });
+    return sendJson(res, 200, {
+      token,
+      expiresAt: new Date(expiresAt).toISOString(),
+      youtubeVideoId: process.env.COURSE_YOUTUBE_VIDEO_ID || "AIM3iOcVdQ8",
+      lessons: [{
+        id: "0901",
+        number: "01",
+        title: "เทรดตามเจ้าตลาด",
+        duration: "1 ชั่วโมง 35 นาที",
+        description: "ปูพื้นฐานการอ่านโครงสร้างตลาด และมองจังหวะ Buy / Sell อย่างเป็นระบบ"
+      }]
+    });
   } catch (error) { return handleError(res, error); }
 };
