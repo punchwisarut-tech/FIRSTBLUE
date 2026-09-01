@@ -25,7 +25,10 @@ async function openClassroom(token) {
   const lifetime = new Date(data.expiresAt).getFullYear() >= 9999;
   document.querySelector("#access-expiry").textContent = lifetime ? "สิทธิ์นักเรียนตลอดชีพ · ผูกกับอุปกรณ์นี้" : `สิทธิ์รับชมถึง ${new Date(data.expiresAt).toLocaleString("th-TH")}`;
   const shell = document.querySelector("#video-shell");
-  if (data.videoUrl) {
+  if (data.youtubeVideoId) {
+    const videoId = encodeURIComponent(data.youtubeVideoId);
+    shell.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1" title="บทที่ 1 เทรดตามเจ้าตลาด" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  } else if (data.videoUrl) {
     shell.innerHTML = `<video controls controlsList="nodownload" playsinline poster="assets/course/lesson-0901-cover.png"><source src="${escapeHtml(data.videoUrl)}" type="video/mp4" />เบราว์เซอร์นี้ไม่รองรับวิดีโอ</video>`;
   } else {
     document.querySelector("#video-status").textContent = "บทเรียนพร้อมแล้ว — กำลังเชื่อมวิดีโอขึ้นระบบสตรีม";
